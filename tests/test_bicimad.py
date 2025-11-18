@@ -16,7 +16,7 @@ FAKE_CSV = """idBike;fleet;trip_minutes;geolocation_unlock;address_unlock;unlock
 
 @pytest.fixture
 def mock_get_csv():
-    """Mock para UrlEMT.get_csv que devuelve un CSV falso"""
+    """Mock for UrlEMT.get_csv that returns a fake CSV"""
     with patch("bicimad.bicimad.UrlEMT") as MockUrlEMT:
         mock_instance = MockUrlEMT.return_value
         mock_instance.get_csv.return_value = StringIO(FAKE_CSV)

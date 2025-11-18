@@ -14,7 +14,7 @@ class BiciMad:
     def __init__(self, month: int, year: int):
         self.__month = month
         self.__year = year
-        self.__data = self.get_data(month, year)
+        self.__data = BiciMad.get_data(month, year)
 
     @staticmethod
     def get_data(month: int, year: int) -> pd.DataFrame:

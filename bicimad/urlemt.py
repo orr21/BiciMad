@@ -11,7 +11,7 @@ class UrlEMT:
     GENERAL = '/Datos-estaticos/Datos-generales-(1)'
 
     def __init__(self):
-        self._valid_urls = self.select_valid_urls()
+        self._valid_urls = UrlEMT.select_valid_urls()
 
     @staticmethod
     def get_links(html: str) -> Set[str]:
@@ -47,6 +47,11 @@ class UrlEMT:
           - month is not between 1 and 12
           - year is not between 21 and 23
           - no valid URL is found for the given month/year
+
+        Examples
+        --------
+        >>> UrlEMT.get_url(1, 21)
+        'https://opendata.emtmadrid.es/Datos-estaticos/Datos-generales-(1)/trips_21_01_January-csv.aspx'
         '''
         if not (1 <= month <= 12):
             raise ValueError("Invalid month. Must be between 1 and 12.")
@@ -71,6 +76,10 @@ class UrlEMT:
         :returns: a text stream (TextIOWrapper) of the CSV file
         :raises ConnectionError: if the download request fails (non-200 response)
         :raises ValueError: if the URL does not exist for the given date
+
+        Examples
+        --------
+        >>> UrlEMT.get_csv(1, 21)
         '''
         url = self.get_url(month, year)
         response = requests.get(url)
@@ -88,6 +97,11 @@ class UrlEMT:
     
         :returns: a set of full URLs to valid trip files
         :raises ConnectionError: if the request to the EMT page fails (non-200 response)
+
+        Examples
+        --------
+        >>> UrlEMT.select_valid_urls()
+        {'https://opendata.emtmadrid.es/Datos-estaticos/Datos-generales-(1)/trips_21_01_January-csv.aspx', ...}
         '''
         url = UrlEMT.EMT + UrlEMT.GENERAL
         response = requests.get(url)
